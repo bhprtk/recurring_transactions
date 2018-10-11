@@ -1,0 +1,16 @@
+{
+  "name": "clerkie",
+  "version": "1.0.0",
+  "description": "Clerkie back-end coding challenge",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pratik Bhandari",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "nodemon": "^1.18.4"
+  }
+}
