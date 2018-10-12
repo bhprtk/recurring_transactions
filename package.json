@@ -9,8 +9,10 @@
   "author": "Pratik Bhandari",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "node-xlsx": "^0.12.1",
     "nodemon": "^1.18.4"
   }
 }
