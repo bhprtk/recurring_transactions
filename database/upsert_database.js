@@ -3,6 +3,8 @@ const moment = require('moment')
 const db = require('./db')
 
 module.exports = transactions => {
+    const exported_on = moment('8/10/2018').format()
+    console.log('exported on', exported_on)
 
     // Store the date and amount with the same name. Let's call it store
 
@@ -38,13 +40,23 @@ module.exports = transactions => {
             days_arr.push(days)
         }
         console.log('days_arr', days_arr)
-        let avg = days_arr.reduce((a, b) => a + b, 0) / days_arr.length
+        let avg = Math.round(days_arr.reduce((a, b) => a + b, 0) / days_arr.length)
         let max = Math.max(...days_arr)
         let min = Math.min(...days_arr)
         console.log('avg', avg)
         console.log('max', max)
         console.log('min', min)
-        if(max % avg <= 5 && avg % min <= 5) {
+        console.log('date', date)
+
+        
+        let exported = Date.parse(exported_on)
+        let last = Date.parse(date[0])
+        let abs = Math.abs(exported - last)
+        let diff = Math.round(abs / (1000*60*60*24))
+
+        console.log("diff", diff)
+
+        if(max % avg <= 5 && avg % min <= 5 && diff < max) {
             console.log('recurring')
         } else {
             console.log('not recurring')

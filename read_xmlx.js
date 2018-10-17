@@ -3,6 +3,7 @@ const xlsx = require('node-xlsx')
 
 const xlsx_data = xlsx.parse('sample_transactions.xlsx')
 const { data } = xlsx_data[0]
+const exported_on = data[0][0].match(/\d{1,2}\/\d{1,2}\/\d{4}/)[0]
 const fields = data[2]
 const transactions_data = data.slice(3)
 transactions = []
