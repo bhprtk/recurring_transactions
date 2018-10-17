@@ -2,6 +2,8 @@ const db = require('./db')
 
 module.exports = transactions => {
     // console.log('transactions', transactions)
+
+    let recurring = [], non_recurring = []
     test_transactions = [
         { 
             name: 'Verizon Wireless',
@@ -30,12 +32,38 @@ module.exports = transactions => {
             trans_id: 17,
             user_id: 1 
         }]
-    console.log('upsert_database')
-    const collection = db.get().collection('test1')
 
-    collection.insertMany(test_transactions, (err, results) => {
-        console.log('results', results)
+    // Store the date and amount with the same name. Let's call it store
+
+    let store = {}
+    transactions.forEach(transaction => {
+        let name = transaction.name.replace(/\s+\d+/g, '')
+        console.log('name', name)
     })
+    
+    
+    // assuming its already recurring
+    // transactions.forEach(transaction => {
+    //     if(!recurring[transaction.name]) {
+    //         recurring[transaction.name] = {
+    //             date: [transaction.date],
+    //             amount: [transaction.amount],
+    //         }
+    //     } else {
+    //         for(let key in transaction) {
+    //             if(key === 'date' || key === 'amount') {
+    //                 recurring[transaction.name][key].push(transaction[key])
+    //             }
+    //         }
+    //     }
+    // })
+
+    
+    
+    // const collection = db.get().collection('test1')
+    // collection.insertMany(test_transactions, (err, results) => {
+    //     console.log('results', results)
+    // })
 
     // collection.find({}).toArray((err, docs) => {
     //     console.log(docs)
