@@ -7,8 +7,9 @@ const db = require('./database/db')
 const upsert_database = require('./database/upsert_database')
 const get_recurring_transactions = require('./database/get_recurring_transactions')
 
-const app = express()
+// Big Brother PORT
 const PORT = 1984
+const app = express()
 
 // Timeout duration
 app.use(timeout('10s'))
@@ -24,7 +25,10 @@ app.get('/', (req, res) => {
 
 app.post('/', (req, res) => {
     upsert_database(req.body, (err, transactions) => {
-        res.send(err ? err : transactions)
+        if(err) res.send(err)
+        get_recurring_transactions((err, transactions) => {
+            res.send(err ? err : transactions)
+        })
     })
 })
 

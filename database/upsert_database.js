@@ -10,14 +10,8 @@ module.exports = (transactions, done) => {
             done(err, '') 
             return
         } 
-        // Get all the database transactions after the write is finished.
         // Call a function to determine all the recurring transactions
-        db.get().collection('transactions').find().toArray((err, result) => {
-            if(err) console.log('err', err)
-            console.log('result', result)
-            find_recurring(transactions)
-        })
-            
+        find_recurring(transactions)
     })
     done()
 }

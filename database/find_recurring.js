@@ -20,7 +20,8 @@ module.exports = transactions => {
         if(!store[name]) {
             store[name] = {
                 date: [transaction.date],
-                amount: [transaction.amount]
+                amount: [transaction.amount],
+                transactions: [transaction]
             }
         } else {
             // Add the transaction dates and amount to each transaction name in the store
@@ -30,13 +31,16 @@ module.exports = transactions => {
                     store[name][key].push(transaction[key])
                 }
             }
+            store[name].transactions.push(transaction)
         }
     })
 
     // Loop through each transaction name in the store
     // Create a list of differences in dates for each transaction 
     for(let key in store) {
-        const { date, amount } = store[key]
+        const { date, amount, transactions } = store[key]
+
+        
         
         // Array to store the list of difference in days
         let days_arr = []
@@ -75,18 +79,16 @@ module.exports = transactions => {
             const next_date = moment(date[0]).add(avg, 'days').format()
             let avg_amount = (amount.reduce((a, b) => a + b, 0) / amount.length).toFixed(2)
 
-            db.get().collection('transactions').find({ name: re }).toArray((err, result) => {
-                if(err) console.log('err', err)
-                let obj = {
-                    name: key,
-                    // user_id: transaction.user_id,
-                    next_amt: avg_amount,
-                    next_date,
-                    transactions: result
-                }
-                db.get().collection('recurring').insertOne(obj)
-                    .catch(err => console.log('err', err))
-            })
+            let obj = {
+                name: key,
+                // user_id: transaction.user_id,
+                next_amt: avg_amount,
+                next_date,
+                transactions
+            }
+            db.get().collection('recurring').insertOne(obj)
+                .catch(err => console.log('err', err))
+
         } 
     }
 }
