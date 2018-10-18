@@ -1,16 +1,14 @@
 const MongoClient = require('mongodb').MongoClient
-const dbName = 'test'
+const dbName = 'clerkie'
 
 let state = {
     db: null
 }
 
 exports.connect = (url, done) => {
-
     const client = new MongoClient(url, { useNewUrlParser: true })
     client.connect(err => {
         if (err) done(err)
-        console.log('connecting')
 
         const db = client.db(dbName)
         state.db = db

@@ -23,7 +23,9 @@ app.get('/', (req, res) => {
 })
 
 app.post('/', (req, res) => {
-    upsert_database(req.body)
+    upsert_database(req.body, (err, transactions) => {
+        res.send(err ? err : transactions)
+    })
 })
 
 // Function to send timeout response
