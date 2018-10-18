@@ -40,7 +40,7 @@ module.exports = transactions => {
     for(let key in store) {
         const { date, amount, transactions } = store[key]
 
-        
+
         
         // Array to store the list of difference in days
         let days_arr = []
