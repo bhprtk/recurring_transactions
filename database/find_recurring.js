@@ -40,8 +40,6 @@ module.exports = transactions => {
     // Create a list of differences in dates for each transaction 
     for(let key in store) {
         const { date, amount, transactions, user_id } = store[key]
-
-
         
         // Array to store the list of difference in days
         let days_arr = []
@@ -87,9 +85,10 @@ module.exports = transactions => {
                 next_date,
                 transactions
             }
+
+            // Save the temp obj in the <recurring> collection
             db.get().collection('recurring').insertOne(obj)
                 .catch(err => console.log('err', err))
-
         } 
     }
 }

@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/', (req, res) => {
-    upsert_database(req.body, (err, transactions) => {
+    upsert_database(req.body, err => {
         if(err) res.send(err)
         get_recurring_transactions((err, transactions) => {
             res.send(err ? err : transactions)
