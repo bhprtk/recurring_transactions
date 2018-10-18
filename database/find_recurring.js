@@ -3,6 +3,7 @@ const moment = require('moment')
 const db = require('./db')
 
 module.exports = transactions => {
+
     // Date when the API was called. 
     // Current date taken from the sample transaction file.
     const exported_on = moment('2018-08-10').format()
@@ -85,10 +86,24 @@ module.exports = transactions => {
                 next_date,
                 transactions
             }
+            
+            // Check if the recurring already has a document with the given name
+            db.get().collection('recurring').findOne({ name: key })
+                .then(db_recurring => {
+                    if(db_recurring) {
+                        // Replace the document with the new recurring obj
+                        db.get().collection('recurring').replaceOne({ name: key }, obj)
+                            .catch(err => console.log('err', err))
+                    } else {
+                        // Save the temp obj in the <recurring> collection
+                        db.get().collection('recurring').insertOne(obj)
+                            .catch(err => console.log('err', err))
+                    }
+                })
+                .catch(err => {
+                    console.log('err', err)
+                })
 
-            // Save the temp obj in the <recurring> collection
-            db.get().collection('recurring').insertOne(obj)
-                .catch(err => console.log('err', err))
         } 
     }
 }
