@@ -1,8 +1,8 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const db = require('./database/db')
 
-// modules
+// Internal Modules
+const db = require('./database/db')
 const upsert_database = require('./database/upsert_database')
 const get_recurring_transactions = require('./database/get_recurring_transactions')
 
@@ -13,18 +13,13 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
-    // for(let i )
-    // console.log('hello world')
-    get_recurring_transactions()
-        .then(results => {
-            res.send(results)
-        })
-    
+    get_recurring_transactions((err, transactions) => {
+        res.send(err ? err : transactions)
+    })
 })
 
 app.post('/', (req, res) => {
     upsert_database(req.body)
-    res.send(req.body)
 })
 
 // Connect to Mongo on start

@@ -1,7 +1,12 @@
 const db = require('./db')
 
-module.exports = () => {
-    const collection = db.get().collection('test1')
-    const results = collection.find().toArray((err, results) => results)
-    return collection.find().toArray().then(data => data)
+module.exports = done => {
+    // Query the recurring collections
+    db.get().collection('recurring').find().toArray((err, transactions) => {
+        if(err) {
+            done(err)
+        } else {
+            done('', transactions)
+        }
+    })
 }
