@@ -21,7 +21,8 @@ module.exports = transactions => {
             store[name] = {
                 date: [transaction.date],
                 amount: [transaction.amount],
-                transactions: [transaction]
+                transactions: [transaction],
+                user_id: transaction.user_id
             }
         } else {
             // Add the transaction dates and amount to each transaction name in the store
@@ -38,7 +39,7 @@ module.exports = transactions => {
     // Loop through each transaction name in the store
     // Create a list of differences in dates for each transaction 
     for(let key in store) {
-        const { date, amount, transactions } = store[key]
+        const { date, amount, transactions, user_id } = store[key]
 
 
         
@@ -81,7 +82,7 @@ module.exports = transactions => {
 
             let obj = {
                 name: key,
-                // user_id: transaction.user_id,
+                user_id,
                 next_amt: avg_amount,
                 next_date,
                 transactions
